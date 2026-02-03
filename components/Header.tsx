@@ -2,11 +2,41 @@
 import { Logo } from "@images";
 import Image from "next/image";
 import Link from "next/link";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { Home, Info, Menu, Mail, FileText } from "lucide-react";
+import { useWallet } from "@/providers/ClientWalletProvider";
+import { Home, Info, Menu, Mail, FileText, Wallet } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+
+// Custom wallet button component
+const WalletMultiButton = () => {
+  const { connected, connecting, publicKey, connect, disconnect } = useWallet();
+
+  if (connecting) {
+    return (
+      <Button variant="outline" disabled className="gap-2">
+        <Wallet size={16} />
+        Connecting...
+      </Button>
+    );
+  }
+
+  if (connected && publicKey) {
+    return (
+      <Button variant="outline" onClick={disconnect} className="gap-2">
+        <Wallet size={16} />
+        {publicKey.slice(0, 4)}...{publicKey.slice(-4)}
+      </Button>
+    );
+  }
+
+  return (
+    <Button variant="outline" onClick={connect} className="gap-2">
+      <Wallet size={16} />
+      Connect Wallet
+    </Button>
+  );
+};
 
 type Props = {};
 

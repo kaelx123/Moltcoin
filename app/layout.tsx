@@ -1,5 +1,4 @@
 import "./globals.css";
-import "@solana/wallet-adapter-react-ui/styles.css";
 import type { Metadata } from "next";
 import { Montserrat, Rubik } from "next/font/google";
 import Provider from "@providers/Provider";
